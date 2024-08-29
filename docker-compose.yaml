@@ -1,0 +1,28 @@
+services:
+    mongodb:
+        image: mongo
+        container_name: mongodb-bookit
+        ports:
+            - 27017:27017
+        environment:
+            - MONGO_INITDB_ROOT_PASSWORD=rootpass
+            - MONGO_INITDB_ROOT_USERNAME=rootuser
+            - MONGO_INITDB_DATABASE=bookit
+    mongo-express:
+
+        image: mongo-express
+        container_name: mongo-express-bookit
+        ports:
+            - 8081:8081
+        environment:
+            - ME_CONFIG_BASICAUTH_USERNAME=admin
+            - ME_CONFIG_BASICAUTH_PASSWORD=my_password 
+
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
+            - ME_CONFIG_MONGODB_SERVER=mongodb
+            - ME_CONFIG_MONGODB_URL=mongodb://@mongodb:27017
+        depends_on:
+            - mongodb
+            
+
